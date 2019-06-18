@@ -6,20 +6,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MapMenuComponent } from './map-menu/map-menu.component';
-import { LoginComponent } from './Login/login/login.component';
-import { RegisterComponent } from './Login/register/register.component';
-import { RequestResetComponent } from './Login/password/request-reset/request-reset.component';
-import { ResponseResetComponent } from './Login/password/response-reset/response-reset.component';
+import { FriendsComponent } from './friends/friends.component';
+import { MapholderComponent } from './mapholder/mapholder.component';
+import { MessagesComponent } from './messages/messages.component';
+import { SearchFriendsComponent } from './friends/search-friends/search-friends.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MapMenuComponent,
-    LoginComponent,
-    RegisterComponent,
-    RequestResetComponent,
-    ResponseResetComponent,
+    FriendsComponent,
+    MapholderComponent,
+    MessagesComponent,
+    SearchFriendsComponent,
   ],
   imports: [
     BrowserModule,
