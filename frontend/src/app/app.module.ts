@@ -6,12 +6,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MapMenuComponent } from './map-menu/map-menu.component';
+import { LoginComponent } from './Login/login/login.component';
+import { RegisterComponent } from './Login/register/register.component';
+import { RequestResetComponent } from './Login/password/request-reset/request-reset.component';
+import { ResponseResetComponent } from './Login/password/response-reset/response-reset.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MapMenuComponent,
+    LoginComponent,
+    RegisterComponent,
+    RequestResetComponent,
+    ResponseResetComponent,
   ],
   imports: [
     BrowserModule,
