@@ -11,6 +11,11 @@ import { MapholderComponent } from './mapholder/mapholder.component';
 import { MessagesComponent } from './messages/messages.component';
 import { SearchFriendsComponent } from './friends/search-friends/search-friends.component';
 
+import { LoginComponent } from './Login/login/login.component';
+import { RegisterComponent } from './Login/register/register.component';
+import { RequestResetComponent } from './Login/password/request-reset/request-reset.component';
+import { ResponseResetComponent } from './Login/password/response-reset/response-reset.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +24,11 @@ import { SearchFriendsComponent } from './friends/search-friends/search-friends.
     FriendsComponent,
     MapholderComponent,
     MessagesComponent,
-    SearchFriendsComponent,
+    SearchFriendsComponent, 
+    LoginComponent,
+    RegisterComponent,
+    RequestResetComponent,
+    ResponseResetComponent,
   ],
   imports: [
     BrowserModule,
