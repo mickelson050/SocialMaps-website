@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="row">
+		<h3>Mijn Vrienden</h3>
+		<div class="col-md-4 col-md-offset-4">
+			<app-search-friends></app-search-friends>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<ul class="list-group">
+				<li class="list-group-item" *ngFor="let friend of myFriends">
+					{{ friend.firstName }}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
