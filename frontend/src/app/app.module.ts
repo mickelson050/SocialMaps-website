@@ -11,6 +11,14 @@ import { MapholderComponent } from './mapholder/mapholder.component';
 import { MessagesComponent } from './messages/messages.component';
 import { SearchFriendsComponent } from './friends/search-friends/search-friends.component';
 
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; 
+import { LoginComponent } from './Login/login/login.component';
+import { RegisterComponent } from './Login/register/register.component';
+import { RequestResetComponent } from './Login/password/request-reset/request-reset.component';
+import { ResponseResetComponent } from './Login/password/response-reset/response-reset.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,11 +27,17 @@ import { SearchFriendsComponent } from './friends/search-friends/search-friends.
     FriendsComponent,
     MapholderComponent,
     MessagesComponent,
-    SearchFriendsComponent,
+    SearchFriendsComponent, 
+    LoginComponent,
+    RegisterComponent,
+    RequestResetComponent,
+    ResponseResetComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyALJZuq_Fj4K-NYoFqE5tOhW4vPiY5nHr8'
     })
