@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit(){
-  	return this.http.post('http://localhost:8000/api/login',this.form).subscribe(
+  	return this.http.post('http://localhost:8888/Socialmaps/server.php',this.form).subscribe(
   		data => console.log(data),
   		error => console.log(error)
   		);
