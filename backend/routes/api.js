@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 const User = require('../models/user')
+const TextPost = require('../models/text_post')
 
 const mongoose = require('mongoose')
 const db = 'mongodb+srv://AuthUser:BVSQScwj2Vffiv@authdb-a9deu.mongodb.net/SocialMaps?retryWrites=true&w=majority'
@@ -72,6 +73,19 @@ router.post('/login', (req, res)=>{
 				let token = jwt.sign(payload, 'secretKey')
 				res.status(200).send({token})
 			}
+		}
+	})
+})
+
+router.post('/new_text_post', (req, res) =>{
+	let text_postData = req.body
+	let textpost  = new TextPost(text_postData)
+	user.save((error, newPost) =>{
+		if(error){
+			console.log(error)
+		}
+		else{
+			
 		}
 	})
 })
