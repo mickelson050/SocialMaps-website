@@ -1,5 +1,6 @@
  import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+ import { AuthService } from '../../auth.service';
+  import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,22 +9,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  public form = {
-  	email:null,
-  	password:null
+  loginUserData = {}
+
+  constructor(private _auth: AuthService,
+    private _router: Router) { }
+
+  loginUser(){
+    this._auth.loginUser(this.loginUserData)
+      .subscribe(
+        res=> {console.log(res)
+        localStorage.setItem('token', res.token)
+        this._router.navigate(['/kaart'])
+      },
+        err=> console.log(err)
+      )
   }
-
-  constructor(private http:HttpClient) { }
-
-
-  onSubmit(){
-  	return this.http.post('http://localhost:8888/Socialmaps/server.php',this.form).subscribe(
-  		data => console.log(data),
-  		error => console.log(error)
-  		);
-  }
-
   ngOnInit() {
+
   }
 
 }
