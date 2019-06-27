@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MessageServiceService } from './services/message-service.service';
 import { Message } from './shared/message.model';
 
+import { AuthService } from './auth.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +18,8 @@ export class AppComponent implements OnInit {
 
 	messagesToDisplay: Message[] = [];
 
-	constructor(private messageservice: MessageServiceService){
+	constructor(private messageservice: MessageServiceService,
+		private _authService: AuthService){
 	}
 
 	ngOnInit(){
