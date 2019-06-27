@@ -5,6 +5,8 @@ import { User } from '../shared/user.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class UserServiceService {
 
   friends: User[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private auth: AuthService, private router: Router) {
     this.fetchUsers();
    }
 
@@ -43,7 +45,17 @@ export class UserServiceService {
   }
 
     registerUser(formdata: FormGroup){
-    this.http.post('https://socialmaps-19e9e.firebaseio.com/users.json', formdata.value).subscribe(responseData => {console.log(responseData)});
+      console.log(formdata.getRawValue());
+      const form = formdata.getRawValue();
+    // this.http.post('https://socialmaps-19e9e.firebaseio.com/users.json', formdata.value).subscribe(responseData => {console.log(responseData)});
+    this.auth.registerUser(form).subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('token', res.token)
+        this.router.navigate(['/kaart'])
+      },
+      err => console.log(err)
+      )
   }
 
 

@@ -33,10 +33,6 @@ export class SignupComponent implements OnInit {
 
   }
 
-  // onSubmit(){
-  // 	console.log(this.signupForm);
-  // }
-
     passwordsNoMatch(control: FormControl): Promise<any> {
   	const promise = new Promise<any>((resolve, reject) => {
 
@@ -57,8 +53,5 @@ export class SignupComponent implements OnInit {
     console.log();
     this.userservice.registerUser(this.signupForm);
   }
-
-
-
 
 }

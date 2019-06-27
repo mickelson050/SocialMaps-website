@@ -27,7 +27,7 @@ export class MessageServiceService {
 	  	new Message(53.191291, 6.482590, 'username', '14-11-1-2019'),
   	];
 
-    this.owsnMessages = [
+    this.ownMessages = [
       new Message(53.241763, 6.577156, 'ownusername', '14-11-1-2019'),
       new Message(53.223554, 6.554692, 'ownusername', '14-11-1-2019'),
       new Message(53.251083, 6.609280, 'ownusername', '14-11-1-2019'),
@@ -37,7 +37,7 @@ export class MessageServiceService {
    }
 
    getOwnMessages(){
-    return this.owsnMessages;
+    return this.ownMessages;
    }
 
    getMessages(){

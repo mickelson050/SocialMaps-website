@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private _registerUrl = "http://localhost:80/api/register"
-  private _loginUrl = "http://localhost:80/api/login"
+  private _registerUrl = "http://socialmaps.openode.io/api/register"
+  private _loginUrl = "http://socialmaps.openode.io/api/login"
 
   constructor(private http: HttpClient,
             private _router: Router) { }
