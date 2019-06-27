@@ -1,0 +1,88 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+			<h1>Registreren</h1>
+			<hr>
+			<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-group">
+				<div class="form-group">
+					<label for="firstname">Voornaam:</label>
+					<input type="text" id="firstname" class="form-control" formControlName="firstname">
+					<span *ngIf="!signupForm.get('firstname').valid && signupForm.get('firstname').touched">
+						<span class="help-block" *ngIf="signupForm.get('firstname').errors['required']">Vul alstublieft uw voornaam in.</span>
+					</span>	
+				</div>
+				<div class="form-group">
+					<label for="lastname">Achternaam:</label>
+					<input type="text" id="lastname" class="form-control" formControlName="lastname">
+					<span *ngIf="!signupForm.get('lastname').valid && signupForm.get('lastname').touched">
+						<span class="help-block" *ngIf="signupForm.get('lastname').errors['required']">Vul alstublieft uw achternaam in.</span>
+					</span>		
+				</div>
+				<label for="gender">Geslacht:</label>
+				<div class="radio" *ngFor="let gender of genders">
+					<label>
+			            <input
+			            formControlName="gender"
+			              id="gender"
+			              type="radio"
+			              [value]="gender">
+			              {{ gender }}
+			          </label>
+				</div>
+				<span *ngIf="!signupForm.get('gender').valid && signupForm.get('gender').touched">
+					<span class="help-block" *ngIf="signupForm.get('gender').errors['required']">Kies alstublieft een optie.</span>
+				</span>	
+				<div class="form-group">
+					<label for="birthdate">Geboortedatum:</label>
+					<input type="date" id="birthdate" class="form-control" formControlName="birthdate">	
+					<span *ngIf="!signupForm.get('birthdate').valid && signupForm.get('birthdate').touched">
+						<span class="help-block" *ngIf="signupForm.get('birthdate').errors['required']">Vul alstublieft uw geboortedatum in.</span>
+					</span>	
+				</div>
+				<div class="form-group">
+					<label for="habitation">Woonplaats:</label>
+					<input type="text" id="habitation" class="form-control" formControlName="habitation">
+					<span *ngIf="!signupForm.get('habitation').valid && signupForm.get('habitation').touched">
+						<span class="help-block" *ngIf="signupForm.get('habitation').errors['required']">Vul alstublieft uw woonplaats in.</span>
+					</span>		
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="text" id="email" class="form-control" formControlName="email">	
+					<span *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">
+						<span class="help-block" *ngIf="signupForm.get('email').errors['required']">Vul alstublieft uw email-adres in.</span>
+						<span class="help-block" *ngIf="signupForm.get('email').errors['email']">Vul alstublieft alstublieft een geldig email-adres in.</span>
+					</span>
+				</div>
+				<div class="form-group">
+					<label for="username">Gebruikersnaam:</label>
+					<input type="text" id="username" class="form-control" formControlName="username">
+					<span *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">
+						<span class="help-block" *ngIf="signupForm.get('username').errors['required']">Vul alstublieft een gebruikersnaam in.</span>
+					</span>	
+				</div>
+				<div class="form-group">
+					<label for="password">Wachtwoord:</label>
+					<input type="password" id="password" class="form-control" formControlName="password">
+					<span *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched">
+						<span class="help-block" *ngIf="signupForm.get('password').errors['required']">Kies alstublieft een wachtwoord.</span>
+					</span>		
+				</div>
+				<div class="form-group">
+					<label for="repeatpassword">Herhaal wachtwoord:</label>
+					<input type="password" id="repeatpassword" class="form-control" formControlName="passwordrepeat">
+					<span *ngIf="!signupForm.get('passwordrepeat').valid && signupForm.get('passwordrepeat').touched">
+						<span class="help-block" *ngIf="signupForm.get('passwordrepeat').errors['required']">Herhaal alstublieft het wachtwoord.</span>
+						<span class="help-block" *ngIf="signupForm.get('passwordrepeat').errors['passwordsNoMatch']">De wachtwoorden komen niet overeen.</span>
+					</span>		
+				</div>
+				<div class="form-group">
+					<label for="profilepicture">Profielfoto:</label>
+					<input type="text" id="profilepicture" class="form-control" formControlName="profilepicture">	
+				</div>
+				<button type="button" class="btn btn-default" (click)="resetForm()">Reset Formulier</button>
+				<button type="submit" class="btn btn-success" [disabled]="!signupForm.valid">Registreer</button>
+			</form>
+		</div>
+	</div>
+</div>

@@ -16,11 +16,7 @@ export class FriendsComponent implements OnInit {
    }
 
   ngOnInit() {
-  	this.myFriends = this.friendsservice.getFriends();
   }
 
-  logFriends(){
-  	console.log(this.myFriends);
-  }
 
 }
