@@ -22,7 +22,9 @@ export class FriendsComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
+
   	this.myFriends = this.friendsservice.getFriends();
+    
     this._eventService.getFriends()
       .subscribe(
         res => this.events = res,
@@ -36,8 +38,5 @@ export class FriendsComponent implements OnInit {
       )
   }
 
-  logFriends(){
-  	console.log(this.myFriends);
-  }
 
 }

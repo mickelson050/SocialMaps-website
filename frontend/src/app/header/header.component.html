@@ -2,10 +2,13 @@
 
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<div class="navbar-header">
+		<div class="navbar-header">s
 			<a *ngIf="!_authService.loggedIn()" href="/login " class="navbar-brand">SocialMaps</a>
 			<a *ngIf="_authService.loggedIn()" href="/kaart" class="navbar-brand">SocialMaps</a>
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+
+
 
 		</div>
 
@@ -26,6 +29,7 @@
 				<li routerLinkActive="nav-item active" [routerLinkActiveOptions]="{exact: true}" *ngIf="_authService.loggedIn()">
 					<a style="cursor:pointer" (click)="_authService.logoutUser()">Logout</a>
 				</li>
+
 				<li class="dropdown" appDropdown>
 					<a href="#" class="dropdown-toggle" role="button">Naam Profiel<span class="caret"></span></a>
 					<ul class="dropdown-menu">
