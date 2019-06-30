@@ -4,7 +4,7 @@
 
 <div>
 	<ul class="list-group" style="width: 100%">
-		<a href="#" *ngFor="let message of availableMessages" (click)="zoomInOnMessage(message)"><li class="list-group-item">{{ message.owner +
+		<a style="cursor: pointer;" *ngFor="let message of availableMessages" (click)="zoomInOnMessage(message)"><li class="list-group-item">{{ message.owner +
 		" - " + message.latitude + ", " + message.longitude }}</li></a>
 	</ul>
 </div>
