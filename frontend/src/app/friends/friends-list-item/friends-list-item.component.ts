@@ -10,7 +10,7 @@ import { UserServiceService } from '../../services/user-service.service';
 })
 export class FriendsListItemComponent implements OnInit {
 
-  @Input() user: User;
+  @Input() user: string;
   @Output() searchQuery = "";
 
   constructor(private friendservice: UserServiceService) {

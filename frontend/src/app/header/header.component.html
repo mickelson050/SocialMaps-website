@@ -30,12 +30,8 @@
 					<a style="cursor:pointer" (click)="_authService.logoutUser()">Logout</a>
 				</li>
 
-				<li class="dropdown" appDropdown>
-					<a href="#" class="dropdown-toggle" role="button">Naam Profiel<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Instellingen</a></li>
-						<li><a href="#">Uitloggen</a></li>
-					</ul>
+				<li>
+					<a href="#" role="button" *ngIf="_authService.loggedIn()">{{ currentUserName | async }}</a>
 				</li>
 			</ul>
 		</div>

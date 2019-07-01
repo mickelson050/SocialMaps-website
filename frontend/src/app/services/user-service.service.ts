@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
 //import { HttpserviceService } from './httpservice.service';
 import { User } from '../shared/user.model';
@@ -14,40 +14,17 @@ import { Router } from '@angular/router';
 export class UserServiceService {
 
 
-  friends: User[] = [];
+  private _friendsUrl = "http://socialmaps.openode.io/api/getFollowers"
+
+  followers: string[] = [];
+  currentUser: User;
+  @Output() currentUserEmitter = new EventEmitter<User>();
 
   constructor(private http: HttpClient, private auth: AuthService, private router: Router) {
-    this.fetchUsers();
    }
 
-
-  getFriends(){
-    console.log(this.friends);
-  	return this.friends;
-  }
-
-  addFriends(users: any){
-    //console.log(users);
-      for(let user in users){
-        this.friends.push(
-          new User(users[user].username,
-            1,
-            users[user].firstname,
-            users[user].lastname,
-            users[user].gender,
-            users[user].habitation,
-            users[user].email,
-            users[user].birthdate,
-            users[user].profilepicture,
-            )
-          )
-      }
-  }
-
     registerUser(formdata: FormGroup){
-      console.log(formdata.getRawValue());
       const form = formdata.getRawValue();
-    // this.http.post('https://socialmaps-19e9e.firebaseio.com/users.json', formdata.value).subscribe(responseData => {console.log(responseData)});
     this.auth.registerUser(form).subscribe(
       res => {
         console.log(res);
@@ -59,23 +36,40 @@ export class UserServiceService {
   }
 
 
-    private fetchUsers(){
-      //console.log('fetching');
-      this.http.get('https://socialmaps-19e9e.firebaseio.com/users.json').pipe(map(responseData => {
-        const postArray = [];
-        for(const key in responseData){
-          if(responseData.hasOwnProperty(key)){
-            postArray.push({...responseData[key], id: key})
-        }
-        }
-        return postArray;
-      })
-    ).subscribe(posts => {this.addFriends(posts)});
+  getFollowers(){
+    return this.followers;
   }
 
 
+  storeCurrentUser(user: User){
+    this.currentUser = new User(
+      user.username,
+      user._id,
+      user.firstname,
+      user.lastname,
+      user.gender,
+      user.habitation,
+      user.email,
+      user.birthdate,
+      user.profilepicture
+      );
+    //localStorage.setItem('currentuser',this.currentUser);
+    this.currentUserEmitter.emit(this.currentUser);
+  }
 
 
-
-
+  fetchFollowers(){
+    const cu = JSON.parse(localStorage.getItem('currentuser'));
+    console.log(cu.username);
+    this.http.post<any>(this._friendsUrl,{'username':cu.username})
+    .subscribe(
+      users => {
+      for(let user in users){
+        console.log(user);
+        this.followers.push(user);
+      }
+    },
+    err =>{ console.log(err)}
+    );
+  }
 }

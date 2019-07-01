@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Message } from './shared/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AuthService {
   private _loginUrl = "http://socialmaps.openode.io/api/login"
 
   constructor(private http: HttpClient,
-            private _router: Router) { }
+            private _router: Router) {
+             }
 
   //this function accepts a user object and returns the 
   //response from backend api, either error or the registered user
@@ -21,6 +23,7 @@ export class AuthService {
   }
 
   loginUser(user){
+    sessionStorage.setItem('id',user.id)
   	return this.http.post<any>(this._loginUrl, user)
   }
 
