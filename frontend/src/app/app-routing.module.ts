@@ -7,7 +7,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { SignupComponent } from './signup/signup.component';
 
 import { LoginComponent } from './Login/login/login.component';
-import { RegisterComponent } from './Login/register/register.component';
+
 
 
 import { AuthGuard } from './auth.guard'; 
