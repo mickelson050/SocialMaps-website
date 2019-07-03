@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const User = require('../models/user')
 const NpUser = require('../models/npUser')
 const TextPost = require('../models/text_post')
+const DelPost = require('../models/del_post')
 
 //**************************//
 //***Database Connection***//
@@ -364,7 +365,7 @@ router.post('/getMyPosts', (req, res)=>{
 
 router.post('/delMyPost', (req, res)=>{
 	let data = req.body
-	TextPost.deleteOne({_id: data._id})
+	DelPost.deleteOne({_id: data._id})
 	.catch(function(error,b,c){
 	
 	})
