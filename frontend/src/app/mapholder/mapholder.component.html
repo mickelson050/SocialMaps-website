@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-sm-9" style="width: relative; height: 600px;">
 			<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-				<agm-marker *ngFor="let message of messagesToDisplay" [latitude]="message.latitude" [longitude]="message.longitude"></agm-marker>
+				<agm-marker *ngFor="let message of messagesToDisplay | async" [latitude]="message.latitude" [longitude]="message.longitude"></agm-marker>
 			</agm-map>
 		</div>
 	</div>

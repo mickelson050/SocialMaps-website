@@ -2,7 +2,10 @@
 
 <div>
 	<ul class="list-group" style="width: 100%">
-		<a style="cursor: pointer;" *ngFor="let message of availableMessages" (click)="zoomInOnMessage(message)"><li class="list-group-item">{{ message.owner +
-		" - " + message.latitude + ", " + message.longitude }}</li></a>
+		<a style="cursor: pointer;" *ngFor="let message of availableMessages | async" (click)="zoomInOnMessage(message)"><li class="list-group-item">
+			<div>
+				{{ message.owner }}<br>Latitude: {{ message.latitude }}<br>Longitude: {{ message.longitude }}
+			</div>
+		</li></a>
 	</ul>
 </div>

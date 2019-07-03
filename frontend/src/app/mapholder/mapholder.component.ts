@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { EventService } from '../event.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,21 +18,22 @@ export class MapholderComponent implements OnInit {
 	constructor(private messageservice: MessageServiceService,
 		private _eventService: EventService,
 		private _router: Router) {
-		this.messagesToDisplay = this.messageservice.fetchPosts();
 		 }
 
 	latitude: number = 53.216978;
 	longitude: number = 6.567029;
 	zoom = 9;
 
-	messagesToDisplay: Message[];
+	@Output() messagesToDisplay = new EventEmitter<Message[]>();
 
 	ngOnInit(){
-		this.messagesToDisplay = this.messageservice.getPosts();
-		console.log(this.messagesToDisplay)
-		this.messageservice.selectedMessage.subscribe(
-			(message: Message) => (this.changeCoords(message)) 
-			);
+		this.messageservice.fetchPosts().subscribe(posts => {
+			const postArray: Message[] = [];
+			for(let post in posts){
+				postArray.push(new Message(posts[post].lat, posts[post].lon, posts[post].username));
+			}
+			this.messagesToDisplay.emit(postArray);
+		});
 
 		this._eventService.getKaart()
 		.subscribe(
@@ -45,6 +46,20 @@ export class MapholderComponent implements OnInit {
 				}
 			}
 		);
+		
+		this.messageservice.fetchPosts().subscribe(posts => {
+      		const messageArray: Message[] = [];
+        for(let post in posts){
+          const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
+          messageArray.push(msg);
+        }
+        this.messagesToDisplay.emit(messageArray);			
+		});
+
+		this.messageservice.selectedMessage.subscribe(
+			(message: Message) => (this.changeCoords(message)) 
+			);
+
 	}
 
 	changeCoords(message: Message){

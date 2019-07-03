@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EventService } from '../event.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -14,14 +14,25 @@ import { Message } from '../shared/message.model';
 export class MessagesComponent implements OnInit {
 
 
-  myMessages: Message[] = [];
+  @Output() myMessages = new EventEmitter<Message[]>();
+  noMessages: Promise<boolean>;
   events = []
   constructor(private _eventService: EventService,
     private _router: Router, private messageservice: MessageServiceService) {
-    this.myMessages = this.messageservice.getOwnMessages(); 
-  }
+    }
 
   ngOnInit() {
+
+    this.messageservice.fetchOwnPosts().subscribe(posts => {
+      const postArray: Message[] = [];
+      for(let post in posts){
+        const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
+        postArray.push(msg);
+      }
+      this.myMessages.emit(postArray);
+    });
+
+
   	this._eventService.getMymessages()
       .subscribe(
         res => this.events = res,
