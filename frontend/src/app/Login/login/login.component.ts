@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
         res=> {console.log(res)
         localStorage.setItem('token', res.token);
         this.userservice.storeCurrentUser(res.userObject);
-        localStorage.setItem('currentuser', JSON.stringify(res.userObject));
+        localStorage.setItem('currentuser', JSON.stringify(res.userObject.username));
+        localStorage.setItem('currentfollowing', JSON.stringify(res.userObject.following));
+        console.log(res.userObject);
         this._router.navigate(['/kaart'])
       },
         err=> console.log(err)

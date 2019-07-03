@@ -5,12 +5,9 @@
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3">
 			<ul class="list-group">
-				<div *ngFor="let message of myMessages">
+				<div *ngFor="let message of myMessages | async">
 					<a href="#"><li class="list-group-item clearfix">
 						<div class="pull-left">
-							<div>
-								{{  message.datetime }}
-							</div>
 							<div>
 								Latitude: {{ message.latitude }}
 								<br>
@@ -18,12 +15,12 @@
 							</div>
 						</div>
 						<div class="pull-right">
-							<button class="btn btn-primary">Verander zichtbaarheid</button>
 							<button class="btn btn-danger">Verwijder</button>
 						</div>
 					</li></a>
 				</div>
 			</ul>
 		</div>
+		<h3 *ngIf="noMessages">Het lijkt er op dat je nog geen berichten hebt geplaatst!</h3>
 	</div>
 </div>

@@ -11,7 +11,8 @@ import { AuthService } from '../auth.service';
 })
 export class MessageServiceService {
 
-  private _postsUrl = "http://socialmaps.openode.io/api/getAllPosts"
+  private _followingPosts = "http://socialmaps.openode.io/api/getFollowerPosts";
+  private _ownPostUrl = "http://socialmaps.openode.io/api/getMyPosts";
 
   friends: User[] = [];
   friendsMessages: Message[] = [];
@@ -23,14 +24,6 @@ export class MessageServiceService {
 
 
   constructor(private userservice: UserServiceService, private auth: AuthService, private http: HttpClient) {
-
-
-    this.ownMessages = [
-      new Message(53.241763, 6.577156, 'ownusername'),
-      new Message(53.223554, 6.554692, 'ownusername'),
-      new Message(53.251083, 6.609280, 'ownusername'),
-      new Message(53.191291, 6.482590, 'ownusername'),
-    ];
 
    }
 
@@ -48,18 +41,19 @@ export class MessageServiceService {
 
 
   fetchPosts(){
-    this.friendsMessages = [];
-    this.http.post(this._postsUrl,null).subscribe(posts => {
-      for(let post in posts){
-        //console.log(post);
-        this.friendsMessages.push(
-          new Message(posts[post].lat, posts[post].lon, posts[post].user)
-          )
-      }
-      //this.friensMessagesEmitter.emit(this.friendsMessages)
-    });
-    localStorage.setItem('posts',JSON.stringify(this.friendsMessages));
-    return this.friendsMessages;
+    const username = JSON.parse(localStorage.getItem("currentuser"));
+    const obj = {
+      "username": username
+    }
+    return this.http.post(this._followingPosts,obj);
+  }
+
+  fetchOwnPosts(){
+    const username = JSON.parse(localStorage.getItem("currentuser"));
+    const obj = {
+      "username": username
+    }
+    return this.http.post(this._ownPostUrl, obj);
   }
 
 }

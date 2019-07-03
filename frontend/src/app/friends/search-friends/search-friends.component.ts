@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserServiceService } from '../../services/user-service.service';
 
 @Component({
   selector: 'app-search-friends',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchFriendsComponent implements OnInit {
 
-  constructor() { }
+
+
+  constructor(private userservice: UserServiceService) { }
 
   ngOnInit() {
   }
+
+
+
+  searchPeople(query){
+  	console.log("username in sf: " + query);
+  	this.userservice.searchPeople(query);
+  }
+
+
+
+
+
 
 }

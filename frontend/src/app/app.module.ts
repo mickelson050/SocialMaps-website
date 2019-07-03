@@ -24,6 +24,7 @@ import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ProfileComponent } from './friends/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { environment } from '../environments/environment';
     FriendsListItemComponent,
     LoginComponent,
     SignupComponent,
+    ProfileComponent,
 
   ],
   imports: [

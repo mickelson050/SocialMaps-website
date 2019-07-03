@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,17 @@ import { Router } from '@angular/router';
 export class UserServiceService {
 
 
-  private _friendsUrl = "http://socialmaps.openode.io/api/getFollowers"
+  private _friendsUrl = "http://socialmaps.openode.io/api/getFollowers";
+  private _unfollowUrl = "http://socialmaps.openode.io/api/unfollow";
+  private _searchUrl = "http://socialmaps.openode.io/api/findPerson";
+  private _followUrl = "http://socialmaps.openode.io/api/follow";
 
   followers: string[] = [];
   currentUser: User;
   @Output() currentUserEmitter = new EventEmitter<User>();
+  @Output() followersEmitter = new EventEmitter<string[]>();
+  searchObject;
+  @Output() foundUsers = new EventEmitter<string[]>();
 
   constructor(private http: HttpClient, private auth: AuthService, private router: Router) {
    }
@@ -37,6 +44,7 @@ export class UserServiceService {
 
 
   getFollowers(){
+    console.log(this.followers);
     return this.followers;
   }
 
@@ -53,23 +61,61 @@ export class UserServiceService {
       user.birthdate,
       user.profilepicture
       );
-    //localStorage.setItem('currentuser',this.currentUser);
-    this.currentUserEmitter.emit(this.currentUser);
   }
 
 
   fetchFollowers(){
+    const followers: string[] = [];
     const cu = JSON.parse(localStorage.getItem('currentuser'));
-    console.log(cu.username);
-    this.http.post<any>(this._friendsUrl,{'username':cu.username})
-    .subscribe(
-      users => {
-      for(let user in users){
-        console.log(user);
-        this.followers.push(user);
-      }
-    },
-    err =>{ console.log(err)}
-    );
+    console.log(cu);
+    return this.http.post<any>(this._friendsUrl,{'username':cu});
+    //this.followersEmitter.emit(followers);
   }
+
+
+  unfollowUser(username: string){
+    const ownUsername = JSON.parse(localStorage.getItem("currentuser"));
+    const obj = {
+      "username": ownUsername,
+      "unfollow": username
+    };
+    console.log(ownUsername);
+    this.http.post(this._unfollowUrl, obj, {responseType: 'text'}).subscribe(res => {
+      //console.log(res);
+    });
+    this.fetchFollowers();
+  }
+
+  followUser(username: string){
+    const ownUsername = JSON.parse(localStorage.getItem("currentuser"));
+    const obj = {
+      "username": ownUsername,
+      "follow": username
+    };
+    console.log(obj);
+    this.http.post(this._followUrl, obj, {responseType: 'text'}).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+
+  searchPeople(query){
+    this.searchObject = query;
+    this.searchSend();
+  }
+
+  searchSend(){
+    const q = {
+      "username": this.searchObject
+    }
+    return this.http.post(this._searchUrl, q).subscribe(users => {
+      const found: string[] = [];
+      console.log(users);
+      for(let user in users){
+        found.push(users[user]);
+      }
+      this.foundUsers.emit(found);
+    });
+  }
+
 }
