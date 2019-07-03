@@ -163,21 +163,6 @@ router.post('/findPerson', (req, res) =>{
 			console.log(err)
 		}
 		else{
-<<<<<<< HEAD
-			if(userList.length == 0){
-				res.send("nothingFound")
-			}
-			else{
-				userArray = {}
-				let i = 0;
-				for(user of userList){
-					userArray[i] = user.username
-					i++
-				}
-				res.json(userArray)
-			}
-			
-=======
 			try{
 				if(userList.length == 0){
 					res.send("nothingFound")
@@ -224,7 +209,6 @@ router.post('/profileUser', (req, res) =>{
 				
 				res.send("nothingFound")
 			}
->>>>>>> master
 		}
 	})
 })
@@ -388,79 +372,8 @@ router.post('/delMyPost', (req, res)=>{
 			res.send("OK")
 		}
 	})
-
-		// (err) =>{
-		// if(err){
-		// 	console.log(err)
-		// }
-		// else{
-		// 	console.log("it worked..?")
-		// }
-	//})
-
 })
 
-<<<<<<< HEAD
-router.post('/getFollowerPosts', (req, res) =>{
-	let data = req.body
-	User.findOne({username: data.username}, (err, user)=>{
-		if(err){
-			console.log(err)
-		}
-		else{
-
-			if(user.following.length ==0){
-				res.send("noFollowersFound")
-			}
-			else{
-				let followedData = {}
-				let i = 0
-				for(followed of user.following){
-					
-					TextPost.find({username: followed}, (err, data)=>{
-						if(err){
-							console.log(err)
-						}
-						else{
-							// console.log(" For data : " + data)
-							for(individuals of data){
-								console.log('individual Data: ' + individuals)
-								followedData[i] = individuals
-								i++
-							}
-							console.log("After Data "+ followedData)
-							res.json(followedData)
-							
-						}
-					})
-				}
-				
-				
-			}
-		}
-	})
-})
-
-router.post('/getMyPosts', (req, res)=>{
-	let data = req.body
-	TextPost.find({username: data.username}, (err, data)=>{
-		if(err){
-			console.log(err)
-		}
-		else{
-			if(data.length == 0){
-				res.send("nothingFound")
-			}
-			else{
-				res.json(data)
-			}
-		}
-	})
-})
-
-
-=======
->>>>>>> master
 
 /*
 * Route: getAllPosts
