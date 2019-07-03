@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 const text_postSchema = new Schema({
-	_id:String,
+	_id:Schema.Types.ObjectId,
 	user: String,
 	username: String,
 	lat: String,

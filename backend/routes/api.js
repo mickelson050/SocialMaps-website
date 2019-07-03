@@ -356,7 +356,7 @@ router.post('/getMyPosts', (req, res)=>{
 				}
 			}
 			catch(error){
-				res.send("Error:nothingFound")
+				res.send("nothingFound")
 			}
 		}
 	})
@@ -364,14 +364,11 @@ router.post('/getMyPosts', (req, res)=>{
 
 router.post('/delMyPost', (req, res)=>{
 	let data = req.body
-	TextPost.findOneAndRemove({_id: data.id}, (err)=>{
-		if(err){
-			console.log(err)
-		}
-		else{
-			res.send("OK")
-		}
+	TextPost.deleteOne({_id: data._id})
+	.catch(function(error,b,c){
+	
 	})
+	res.send("Ok")
 })
 
 
