@@ -158,7 +158,7 @@ router.post('/login', (req, res)=>{
 */
 router.post('/findPerson', (req, res) =>{
 	let userData = req.body
-	User.find({username: {$regex: '.*' + userData.username + '.*' }}, function(err, userList) {
+	User.find({username: {$regex: '.*' + userData.username + '.*', $options : 'i' }}, function(err, userList) {
 		if(err){
 			console.log(err)
 		}
