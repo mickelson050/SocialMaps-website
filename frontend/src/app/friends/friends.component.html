@@ -10,19 +10,8 @@
 		<div class="col-md-6 col-md-offset-3">
 			<ul class="list-group">
 				<div *ngFor="let user of usersFound | async">
-						
 							<li class="list-group-item clearfix" style="margin: 2%; cursor: pointer">
-								<div class="row">
-									<div class="col-xs-5">
-										<h4 class="list-group-item-header">{{ user }}</h4>
-									</div>
-									<div class="col-xs-4">
-										<button *ngIf="!checkUser(user); else allreadyFollowing" class="btn btn-primary" (click)="followUser(user)">Follow</button>
-										<ng-template #allreadyFollowing>
-											<button class="btn btn-primary" disabled="true">Al volgend</button>
-										</ng-template>
-									</div>
-								</div>
+								<app-search-list-search-item [user]="user"></app-search-list-search-item>
 							</li>
 								
 							</div>
@@ -35,8 +24,10 @@
 	<hr>
 	<br>
 
-	<!-- <ng-template #searchList> -->
-	<h5>Mensen die ik volg</h5>
+<div>
+	<div *ngIf="hasFollowers()">
+		<h5>Mensen die ik volg</h5>
+	</div>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<ul class="list-group">
@@ -44,14 +35,7 @@
 				<div *ngFor="let follower of followers | async">
 						
 							<li class="list-group-item clearfix" style="margin: 2%; cursor: pointer">
-								<div class="row">
-									<div class="col-xs-5">
-										<h4 class="list-group-item-header">{{ follower }}</h4>
-									</div>
-									<div class="col-xs-4">
-										<button class="btn btn-danger" (click)="unfollowUser(follower)">Unfollow</button>
-									</div>
-								</div>
+								<app-friends-list-item [user]="follower"></app-friends-list-item>
 							</li>
 						
 					</div>
@@ -60,6 +44,11 @@
 			</ul>
 		</div>
 	</div>
-	<!-- </ng-template> -->
-			
+</div>
+
+<div *ngIf="!hasFollowers()">
+	<h5>Je volgt nog niemand!</h5>
+</div>
+
+
 </div>

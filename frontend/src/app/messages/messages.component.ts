@@ -15,7 +15,7 @@ export class MessagesComponent implements OnInit {
 
 
   @Output() myMessages = new EventEmitter<Message[]>();
-  noMessages: Promise<boolean>;
+  noMessages: boolean;
   events = []
   constructor(private _eventService: EventService,
     private _router: Router, private messageservice: MessageServiceService) {
@@ -26,11 +26,17 @@ export class MessagesComponent implements OnInit {
     this.messageservice.fetchOwnPosts().subscribe(posts => {
       const postArray: Message[] = [];
       for(let post in posts){
-        const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
+        const msg = new Message(posts[post]._id, posts[post].lat, posts[post].lon, posts[post].username, posts[post].content);
         postArray.push(msg);
       }
+      localStorage.setItem('ownposts', JSON.stringify(postArray));
+      this.noMessages = false;
       this.myMessages.emit(postArray);
-    });
+    },
+      error => {
+        this.myMessages.emit(JSON.parse(localStorage.getItem('ownposts')));
+      }
+    );
 
 
   	this._eventService.getMymessages()
@@ -46,5 +52,10 @@ export class MessagesComponent implements OnInit {
       )
   }
 
+
+  onDeletePost(id: string){
+    this.messageservice.deletePost(id);
+    setTimeout(function(){ window.location.reload(); }, 500);
+  }
 
 }

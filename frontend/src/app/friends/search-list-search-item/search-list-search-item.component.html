@@ -3,7 +3,7 @@
 		<h4 class="list-group-item-header">{{ user }}</h4>
 	</div>
 	<div class="col-xs-10">
-		<button class="btn btn-danger pull-right" (click)="unfollowUser(user)">Unfollow</button>
+		<button class="btn btn-success pull-right" *ngIf="!checkUser(user); else alreadyFollowing" (click)="followUser(user)">Follow</button>
 		<button class="btn btn-primary pull-right" (click)="showProfile()">Bekijk profiel</button>
 	</div>
 </div>
@@ -21,3 +21,7 @@
 	</div>
 </div>
 
+
+<ng-template #alreadyFollowing>
+	<button class="btn btn-primary pull-right" disabled="true">Al volgend</button>
+</ng-template>
