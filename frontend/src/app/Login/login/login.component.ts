@@ -1,14 +1,10 @@
-<<<<<<< HEAD
- import { Component, OnInit } from '@angular/core';
- import { AuthService } from '../../auth.service';
- import { Router } from '@angular/router';
-=======
+
 import { Component, OnInit, Output,  } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { UserServiceService } from '../../services/user-service.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
->>>>>>> origin/master
+
 
  @Component({
    selector: 'app-login',
@@ -17,26 +13,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
  })
  export class LoginComponent implements OnInit {
 
-<<<<<<< HEAD
-   loginUserData = {}
 
-   constructor(private _auth: AuthService,
-     private _router: Router) { }
-
-   loginUser(){
-     this._auth.loginUser(this.loginUserData)
-     .subscribe(
-       res=> {
-         sessionStorage.setItem('userObject', res.userObject)
-         console.log(sessionStorage.getItem('userObject'))
-         localStorage.setItem('token', res.token)
-         this._router.navigate(['/kaart'])
-       },
-       err=> console.log(err)
-       )
-   }
-   ngOnInit() {
-=======
   loginUserData: FormGroup;
   currentUser; 
 
@@ -65,7 +42,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
       )
   }
   ngOnInit() {
->>>>>>> origin/master
+
 
    }
 

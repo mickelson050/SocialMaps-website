@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 const text_postSchema = new Schema({
+	_id:String,
 	user: String,
 	username: String,
 	lat: String,

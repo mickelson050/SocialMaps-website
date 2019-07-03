@@ -18,6 +18,7 @@ export class MapholderComponent implements OnInit {
 	constructor(private messageservice: MessageServiceService,
 		private _eventService: EventService,
 		private _router: Router) {
+		this.messagesToDisplay = this.messageservice.fetchPosts();
 		 }
 
 	latitude: number = 53.216978;
@@ -27,7 +28,8 @@ export class MapholderComponent implements OnInit {
 	messagesToDisplay: Message[];
 
 	ngOnInit(){
-		this.messagesToDisplay = JSON.parse(localStorage.getItem('posts'));
+		this.messagesToDisplay = this.messageservice.getPosts();
+		console.log(this.messagesToDisplay)
 		this.messageservice.selectedMessage.subscribe(
 			(message: Message) => (this.changeCoords(message)) 
 			);

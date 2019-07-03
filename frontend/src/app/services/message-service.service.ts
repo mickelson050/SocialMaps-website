@@ -46,6 +46,10 @@ export class MessageServiceService {
     this.selectedMessage.emit(message);
    }
 
+   getPosts(){
+     return this.fetchPosts();
+   }
+
 
   fetchPosts(){
     this.friendsMessages = [];
@@ -56,9 +60,11 @@ export class MessageServiceService {
           new Message(posts[post].lat, posts[post].lon, posts[post].user)
           )
       }
+      console.log(this.friendsMessages)
       //this.friensMessagesEmitter.emit(this.friendsMessages)
     });
-    localStorage.setItem('posts',JSON.stringify(this.friendsMessages));
+    //localStorage.setItem('posts',JSON.stringify(this.friendsMessages));
+    console.log(this.friendsMessages);
     return this.friendsMessages;
   }
 
