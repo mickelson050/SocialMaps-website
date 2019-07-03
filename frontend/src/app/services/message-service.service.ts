@@ -39,6 +39,10 @@ export class MessageServiceService {
     this.selectedMessage.emit(message);
    }
 
+   getPosts(){
+     return this.fetchPosts();
+   }
+
 
   fetchPosts(){
     const username = JSON.parse(localStorage.getItem("currentuser"));

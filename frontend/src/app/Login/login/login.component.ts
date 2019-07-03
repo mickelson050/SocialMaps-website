@@ -1,15 +1,18 @@
+
 import { Component, OnInit, Output,  } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { UserServiceService } from '../../services/user-service.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
-})
-export class LoginComponent implements OnInit {
+
+ @Component({
+   selector: 'app-login',
+   templateUrl: './login.component.html',
+   styleUrls: ['./login.component.css']
+ })
+ export class LoginComponent implements OnInit {
+
 
   loginUserData: FormGroup;
   currentUser; 
@@ -42,6 +45,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
 
-  }
 
-}
+   }
+
+ }

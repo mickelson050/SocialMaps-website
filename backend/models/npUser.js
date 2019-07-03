@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-const userSchema = new Schema({
+const npUserSchema = new Schema({
 	firstname: String,
 	lastname: String,
 	gender: String,
@@ -9,11 +9,10 @@ const userSchema = new Schema({
 	email: String,
 	birthdate: String,
 	username: String,
-	password: String,
-	// password: {type: String, select: false},
 	profilepicture: String,
+	password: {type:String, select:false},
 	following: [String]
 
 })
 
-module.exports = mongoose.model('users', userSchema, 'users') 
+module.exports = mongoose.model('npUsers', npUserSchema, 'users') 
