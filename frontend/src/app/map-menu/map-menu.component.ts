@@ -24,9 +24,7 @@ export class MapMenuComponent implements OnInit {
       console.log(posts);
       const messageArray: Message[] = [];
         for(let post in posts){
-          console.log(posts[post]);
           const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
-          console.log(msg);
           messageArray.push(msg);
         }
         this.availableMessages.emit(messageArray);
