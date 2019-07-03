@@ -4,8 +4,8 @@ const router = express.Router()
 const crypto = require('crypto')
 
 const User = require('../models/user')
+const NpUser = require('../models/npUser')
 const TextPost = require('../models/text_post')
-const testModel = require('../models/testmodel')
 
 //**************************//
 //***Database Connection***//
@@ -119,6 +119,7 @@ router.post('/register', (req, res) =>{
 		}
 	})
 })
+
 /*
 * Route: login
 * Description: Route for login. Checks if an email exists. Checks send data to db data and returns JWT token.
@@ -151,6 +152,10 @@ router.post('/login', (req, res)=>{
 	})
 })
 
+/*
+* Route: findPerson
+* Description: Route to findPerson. returns a list of everyone you search
+*/
 router.post('/findPerson', (req, res) =>{
 	let userData = req.body
 	User.find({username: {$regex: '.*' + userData.username + '.*' }}, function(err, userList) {
@@ -158,6 +163,7 @@ router.post('/findPerson', (req, res) =>{
 			console.log(err)
 		}
 		else{
+<<<<<<< HEAD
 			if(userList.length == 0){
 				res.send("nothingFound")
 			}
@@ -171,6 +177,54 @@ router.post('/findPerson', (req, res) =>{
 				res.json(userArray)
 			}
 			
+=======
+			try{
+				if(userList.length == 0){
+					res.send("nothingFound")
+				}
+				else{
+					userArray = {}
+					let i = 0;
+					for(user of userList){
+						userArray[i] = user.username
+						i++
+					}
+					res.json(userArray)
+				}
+			}
+			catch(error){
+				res.send("nothingFound")
+			}
+		}
+	})
+})
+
+/*
+* Route: profileUser
+* Description: Route to profileUser. returns nonprivate data of 1 person
+# Note: Username has to be specific
+*/
+router.post('/profileUser', (req, res) =>{
+	let userData = req.body
+	NpUser.find({username:  userData.username}, function(err, user) {
+		if(err){
+			console.log(err)
+		}
+		else{
+			try{
+				if(user.length == 0){
+					
+					res.send("nothingFound")
+				}
+				else{
+					res.json(user)
+				}
+			}
+			catch(error){
+				
+				res.send("nothingFound")
+			}
+>>>>>>> master
 		}
 	})
 })
@@ -202,6 +256,9 @@ router.post('/unfollow', (req, res)=>{
 		if(err){
 			console.log(err)
 		}
+		else if(!user){
+			res.send("noUserFound")
+		}
 		else{
 			console.log("succesfully unfollowed")
 			res.send("Ok")
@@ -221,18 +278,129 @@ router.post('/getFollowers', (req, res)=>{
 			console.log(err)
 		}
 		else{
-
-			if(user.following.length ==0){
-				res.send("noFollowersFound")
+			try{
+				if(user.following.length ==0){
+					res.send("noFollowersFound")
+				}
+				else{
+					res.json(user.following)
+					
+				}
 			}
-			else{
-				res.json(user.following)
-				
+			catch(error){
+				res.send("noFollowersFound")
 			}
 		}
 	})
 })
 
+/*
+* Route: getFollowerPosts
+* Description: Route to getFollowerPosts. returns a list of all posts from everyone you follow
+*/
+router.post('/getFollowerPosts', (req, res) =>{
+	let data = req.body
+	let followedData = {}
+	let i = 0
+	let j = 0
+	User.findOne({username: data.username}, (err, user)=>{
+		if(err){
+			console.log(err)
+		}
+		else{
+			try{
+				if(!user.following){
+					res.send("noFollowersFound")
+				}
+				else if(user.following.length ==0){
+					res.send("noFollowersFound")
+				}
+				else{
+					// $in has the list of everyone you follow, handles the request on db
+					TextPost.find({username: {$in: user.following}}, (err, data)=>{
+						if(err){
+							console.log(err)
+						}
+						else{
+							try{
+								if(data.length == 0){
+									res.json("noPostsFound")
+
+								}
+								else{
+									res.json(data)
+
+								}
+								
+							}
+							catch(error){
+								console.log("ERROR ==" +error)
+								res.json("noPostsFound")
+							}
+						}
+					})
+						
+				}
+				
+			}
+			catch(error){
+				console.log(error)
+				res.send("noFollowersFound")
+			}
+		}
+	})
+})
+
+/*
+* Route: getMyPosts
+* Description: Route to getMyPosts. returns a list of all your your posts
+* Note: sends back posts from username, so this can be used to get posts from other people
+*/
+router.post('/getMyPosts', (req, res)=>{
+	let data = req.body
+	TextPost.find({username: data.username}, (err, data)=>{
+		if(err){
+			console.log(err)
+		}
+		else{
+			try{
+				if(data.length == 0){
+					res.send("nothingFound")
+				}
+				else{
+					res.json(data)
+				}
+			}
+			catch(error){
+				res.send("Error:nothingFound")
+			}
+		}
+	})
+})
+
+router.post('/delMyPost', (req, res)=>{
+	let data = req.body
+	TextPost.findOneAndRemove({_id: data.id}, (err)=>{
+		if(err){
+			console.log(err)
+		}
+		else{
+			res.send("OK")
+		}
+	})
+
+		// (err) =>{
+		// if(err){
+		// 	console.log(err)
+		// }
+		// else{
+		// 	console.log("it worked..?")
+		// }
+	//})
+
+})
+
+<<<<<<< HEAD
 router.post('/getFollowerPosts', (req, res) =>{
 	let data = req.body
 	User.findOne({username: data.username}, (err, user)=>{
@@ -291,6 +459,8 @@ router.post('/getMyPosts', (req, res)=>{
 })
 
 
+=======
+>>>>>>> master
 
 /*
 * Route: getAllPosts
@@ -326,25 +496,14 @@ router.post('/new_text_post', (req, res) =>{
 	})
 })
 
-router.post('/testmodel', (req, res) =>{
-	let testdata = req.body
-	let testpost  = new testModel(testdata)
-	testpost.save((error, newPost) =>{
-		if(error){
-			console.log(error)
-		}
-		else{
-			res.json(newPost)
-		}
-	})
-})
 
-
-router.get('/Kaart', verifyToken, (req, res) => {
+// ------ Routes only for verification ------ //
+router.get('/kaart',verifyToken, (req, res) => {
 	let kaart =[
 	{
 
 	}]
+	console.log("Req: " + req.userId)
 	res.json(kaart)
 })
 
@@ -363,6 +522,8 @@ router.get('/mymessages',  verifyToken, (req, res) => {
 	}]
 	res.json(mymessages)
 })
+
+
 
 
 module.exports = router

@@ -14,7 +14,7 @@ import { User } from '../shared/user.model';
 })
 export class FriendsComponent implements OnInit {
 
-  myFriends: User[] = this.friendsservice.getFriends();
+ followers: string[];
 
   events = []
   constructor(private friendsservice: UserServiceService,
@@ -23,8 +23,8 @@ export class FriendsComponent implements OnInit {
 
   ngOnInit() {
 
-  	this.myFriends = this.friendsservice.getFriends();
-    
+  	this.friendsservice.fetchFollowers();
+    this.followers = this.friendsservice.getFollowers();
     this._eventService.getFriends()
       .subscribe(
         res => this.events = res,

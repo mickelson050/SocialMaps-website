@@ -12,14 +12,16 @@ import { User } from '../shared/user.model';
 })
 export class MapMenuComponent implements OnInit { 
 
-  availableMessages: Message[] = [];
+  availableMessages: Message[];
+  messagesLoaded: boolean = false;
 
   constructor(private messageservice: MessageServiceService) {
-
+    //this.availableMessages = this.messageservice.fetchPosts();
    }
 
   ngOnInit() {
-  	this.availableMessages = this.messageservice.getMessages();
+    //this.availableMessages = [];
+    this.availableMessages = this.messageservice.fetchPosts();
   }
 
   zoomInOnMessage(message: Message){

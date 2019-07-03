@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-// import { HttpClient } from '@angular/common/http';
-// import { map } from 'rxjs/operators';
-import { HttpserviceService } from '../services/httpservice.service';
 import { UserServiceService } from '../services/user-service.service';
 
 @Component({
@@ -53,5 +50,6 @@ export class SignupComponent implements OnInit {
     console.log();
     this.userservice.registerUser(this.signupForm);
   }
+
 
 }
