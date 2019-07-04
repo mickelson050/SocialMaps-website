@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li *ngIf="_authService.loggedIn()" routerLinkActive="nav-item active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/kaart">Kaart</a></li>
-				<li *ngIf="_authService.loggedIn()" routerLinkActive="nav-item active"><a routerLink="/friends">Vrienden</a></li>
+				<li *ngIf="_authService.loggedIn()" routerLinkActive="nav-item active"><a routerLink="/friends">Follow</a></li>
 				<li *ngIf="_authService.loggedIn()" routerLinkActive="nav-item active"><a routerLink="/mymessages">Mijn berichten</a></li>
 			</ul>
 
