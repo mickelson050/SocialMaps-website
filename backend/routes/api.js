@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const User = require('../models/user')
 const NpUser = require('../models/npUser')
 const TextPost = require('../models/text_post')
+const DelPost = require('../models/del_post')
 
 //**************************//
 //***Database Connection***//
@@ -158,7 +159,7 @@ router.post('/login', (req, res)=>{
 */
 router.post('/findPerson', (req, res) =>{
 	let userData = req.body
-	User.find({username: {$regex: '.*' + userData.username + '.*' }}, function(err, userList) {
+	User.find({username: {$regex: '.*' + userData.username + '.*', $options : 'i' }}, function(err, userList) {
 		if(err){
 			console.log(err)
 		}
@@ -356,7 +357,7 @@ router.post('/getMyPosts', (req, res)=>{
 				}
 			}
 			catch(error){
-				res.send("Error:nothingFound")
+				res.send("nothingFound")
 			}
 		}
 	})
@@ -364,24 +365,11 @@ router.post('/getMyPosts', (req, res)=>{
 
 router.post('/delMyPost', (req, res)=>{
 	let data = req.body
-	TextPost.findOneAndRemove({_id: data.id}, (err)=>{
-		if(err){
-			console.log(err)
-		}
-		else{
-			res.send("OK")
-		}
+	DelPost.deleteOne({_id: data._id})
+	.catch(function(error,b,c){
+	
 	})
-
-		// (err) =>{
-		// if(err){
-		// 	console.log(err)
-		// }
-		// else{
-		// 	console.log("it worked..?")
-		// }
-	//})
-
+	res.send("Ok")
 })
 
 
