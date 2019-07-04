@@ -20,15 +20,24 @@ export class MapMenuComponent implements OnInit {
    }
 
   ngOnInit() {
+
     this.messageservice.fetchPosts().subscribe( posts => {
-      console.log(posts);
-      const messageArray: Message[] = [];
+      let messageArray: Message[] = [];
         for(let post in posts){
-          const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
+          console.log(post);
+          const msg = new Message(posts[post]._id, posts[post].lat, posts[post].lon, posts[post].username, 'Not available');
           messageArray.push(msg);
         }
+        if(JSON.parse(localStorage.getItem('currentfollowing')).length === 0){
+          messageArray = [];
+        }
+        localStorage.setItem('posts', JSON.stringify(messageArray));
         this.availableMessages.emit(messageArray);
-    });
+    },
+      error => {
+        this.availableMessages.emit(JSON.parse(localStorage.getItem('posts')));
+      }
+    );
   }
 
   zoomInOnMessage(message: Message){

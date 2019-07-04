@@ -8,8 +8,6 @@ import { SignupComponent } from './signup/signup.component';
 
 import { LoginComponent } from './Login/login/login.component';
 
-
-
 import { AuthGuard } from './auth.guard'; 
 
 const routes: Routes = [

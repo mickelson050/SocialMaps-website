@@ -8,10 +8,10 @@ import { Message } from './shared/message.model';
 })
 export class AuthService {
 
-  // private _registerUrl = "http://socialmaps.openode.io/api/register"
-  // private _loginUrl = "http://socialmaps.openode.io/api/login"
-  private _registerUrl = "http://localhost:80/api/register"
-  private _loginUrl = "http://localhost:80/api/login"
+  private _registerUrl = "http://socialmaps.openode.io/api/register"
+  private _loginUrl = "http://socialmaps.openode.io/api/login"
+  // private _registerUrl = "http://localhost:80/api/register"
+  // private _loginUrl = "http://localhost:80/api/login"
 
   constructor(private http: HttpClient,
             private _router: Router) {
@@ -30,15 +30,18 @@ export class AuthService {
   }
 
   loggedIn(){
-  	return !!localStorage.getItem('token')
+  	return !!localStorage.getItem('token');
   }
 
   logoutUser(){
-    localStorage.removeItem('token')
-    this._router.navigate(['/login'])
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('currentuser');
+    // localStorage.removeItem('currentfollowing');
+    localStorage.clear();
+    this._router.navigate(['/login']);
   }
 
   getToken(){
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 }

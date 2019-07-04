@@ -4,19 +4,18 @@ import { User } from '../../shared/user.model';
 import { UserServiceService } from '../../services/user-service.service';
 
 @Component({
-  selector: 'app-friends-list-item',
-  templateUrl: './friends-list-item.component.html',
-  styleUrls: ['./friends-list-item.component.css']
+  selector: 'app-search-list-search-item',
+  templateUrl: './search-list-search-item.component.html',
+  styleUrls: ['./search-list-search-item.component.css']
 })
-export class FriendsListItemComponent implements OnInit {
+export class SearchListSearchItemComponent implements OnInit {
 
   @Input() user: string;
   @Output() searchQuery = "";
-   userShowed: boolean = false;
+  userShowed: boolean = false;
   userInfo: any;
 
-  constructor(private friendservice: UserServiceService) {
-   }
+  constructor(private friendservice: UserServiceService) { }
 
   ngOnInit() {
   }
@@ -45,10 +44,22 @@ export class FriendsListItemComponent implements OnInit {
     }
 }
 
-	  unfollowUser(username: string){
-    	this.friendservice.unfollowUser(username);
-    	setTimeout(function(){ window.location.reload(); }, 500);
- 	 }
+  followUser(username: string){
+    console.log("USERSFSDFSSDF " + username);
+    this.friendservice.followUser(username);
+    setTimeout(function(){ window.location.reload(); }, 500);
+  }
+
+  checkUser(username: string){
+    const currentFollowers = localStorage.getItem("currentfollowing");
+    if(currentFollowers.indexOf(username) > -1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
 
 
 }

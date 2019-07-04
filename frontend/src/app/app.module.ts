@@ -24,7 +24,7 @@ import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { ProfileComponent } from './friends/profile/profile.component';
+import { SearchListSearchItemComponent } from './friends/search-list-search-item/search-list-search-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { ProfileComponent } from './friends/profile/profile.component';
     FriendsListItemComponent,
     LoginComponent,
     SignupComponent,
-    ProfileComponent,
+    SearchListSearchItemComponent,
 
   ],
   imports: [

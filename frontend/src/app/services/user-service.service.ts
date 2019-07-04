@@ -19,6 +19,7 @@ export class UserServiceService {
   private _unfollowUrl = "http://socialmaps.openode.io/api/unfollow";
   private _searchUrl = "http://socialmaps.openode.io/api/findPerson";
   private _followUrl = "http://socialmaps.openode.io/api/follow";
+  private _profileUrl = "http://socialmaps.openode.io/api/profileUser";
 
   followers: string[] = [];
   currentUser: User;
@@ -35,8 +36,9 @@ export class UserServiceService {
     this.auth.registerUser(form).subscribe(
       res => {
         console.log(res);
-        localStorage.setItem('token', res.token)
-        this.router.navigate(['/kaart'])
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('currentuser', JSON.stringify(form.username));
+        this.router.navigate(['/kaart']);
       },
       err => console.log(err)
       )
@@ -80,6 +82,14 @@ export class UserServiceService {
       "unfollow": username
     };
     console.log(ownUsername);
+    let fol = JSON.parse(localStorage.getItem('currentfollowing'));
+    if(fol.length === 1){
+      let pos = JSON.parse(localStorage.getItem('posts'));
+      pos = [];
+      localStorage.setItem('posts', JSON.stringify(pos));
+      fol = [];
+    }
+    localStorage.setItem('currentfollowing', JSON.stringify(fol));
     this.http.post(this._unfollowUrl, obj, {responseType: 'text'}).subscribe(res => {
       //console.log(res);
     });
@@ -96,6 +106,7 @@ export class UserServiceService {
     this.http.post(this._followUrl, obj, {responseType: 'text'}).subscribe(res => {
       console.log(res);
     });
+    
   }
 
 
@@ -110,12 +121,21 @@ export class UserServiceService {
     }
     return this.http.post(this._searchUrl, q).subscribe(users => {
       const found: string[] = [];
-      console.log(users);
       for(let user in users){
-        found.push(users[user]);
+        if(users[user] != JSON.parse(localStorage.getItem('currentuser'))){
+          found.push(users[user]);
+        }
       }
       this.foundUsers.emit(found);
     });
   }
+
+  fetchProfile(username: string){
+    const obj = {
+      "username": username
+    }
+     return this.http.post(this._profileUrl, obj);
+    }
+  
 
 }

@@ -28,12 +28,19 @@ export class MapholderComponent implements OnInit {
 
 	ngOnInit(){
 		this.messageservice.fetchPosts().subscribe(posts => {
+			const emptyArray: Message[] = [];
 			const postArray: Message[] = [];
 			for(let post in posts){
-				postArray.push(new Message(posts[post].lat, posts[post].lon, posts[post].username));
+				postArray.push(new Message(posts[post]._id, posts[post].lat, posts[post].lon, posts[post].username, 'Not available'));
 			}
+			
 			this.messagesToDisplay.emit(postArray);
-		});
+		
+		},
+			error => {
+				this.messagesToDisplay.emit(JSON.parse(localStorage.getItem('posts')));
+			}
+		);
 
 		this._eventService.getKaart()
 		.subscribe(
@@ -46,15 +53,6 @@ export class MapholderComponent implements OnInit {
 				}
 			}
 		);
-		
-		this.messageservice.fetchPosts().subscribe(posts => {
-      		const messageArray: Message[] = [];
-        for(let post in posts){
-          const msg = new Message(posts[post].lat, posts[post].lon, posts[post].username);
-          messageArray.push(msg);
-        }
-        this.messagesToDisplay.emit(messageArray);			
-		});
 
 		this.messageservice.selectedMessage.subscribe(
 			(message: Message) => (this.changeCoords(message)) 

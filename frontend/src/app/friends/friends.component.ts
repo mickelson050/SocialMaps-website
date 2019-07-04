@@ -37,8 +37,15 @@ export class FriendsComponent implements OnInit {
       for(let follower of followers){
         folArray.push(follower);
       }
+      localStorage.setItem('currentfollowing', JSON.stringify(folArray));
       this.followers.emit(folArray);
-    });
+    },
+      error => {
+        this.followers.emit(JSON.parse(localStorage.getItem('currentfollowing')));
+      }
+    );
+
+
 
     this.friendsservice.foundUsers.subscribe(users => {
       console.log(users);
@@ -59,28 +66,14 @@ export class FriendsComponent implements OnInit {
       )
   }
 
-  unfollowUser(username: string){
-    this.friendsservice.unfollowUser(username);
-    //window.location.reload();
-    setTimeout(function(){ window.location.reload(); }, 500);
-  }
-
-
-  followUser(username: string){
-    console.log(username);
-    this.friendsservice.followUser(username);
-    setTimeout(function(){ window.location.reload(); }, 500);
-  }
-
-
-  checkUser(username: string){
-    const currentFollowers = localStorage.getItem("currentfollowing");
-    if(currentFollowers.indexOf(username) > -1){
+  hasFollowers(){
+    if(JSON.parse(localStorage.getItem('currentfollowing')).length > 0){
       return true;
     }else{
       return false;
     }
   }
+
 
 
 }

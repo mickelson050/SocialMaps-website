@@ -13,6 +13,7 @@ export class MessageServiceService {
 
   private _followingPosts = "http://socialmaps.openode.io/api/getFollowerPosts";
   private _ownPostUrl = "http://socialmaps.openode.io/api/getMyPosts";
+  private _deleteUrl = "http://socialmaps.openode.io/api/delMyPost";
 
   friends: User[] = [];
   friendsMessages: Message[] = [];
@@ -49,7 +50,8 @@ export class MessageServiceService {
     const obj = {
       "username": username
     }
-    return this.http.post(this._followingPosts,obj);
+
+      return this.http.post(this._followingPosts,obj);
   }
 
   fetchOwnPosts(){
@@ -58,6 +60,16 @@ export class MessageServiceService {
       "username": username
     }
     return this.http.post(this._ownPostUrl, obj);
+  }
+
+  deletePost(id: string){
+    console.log(id);
+    const obj = {
+      "_id": id,
+    }
+    console.log(obj);
+    this.http.post(this._deleteUrl, obj).subscribe();
+    
   }
 
 }
